@@ -1,31 +1,32 @@
 #pragma once
 #include <iostream>
-#include <vector>
+#include "VectorPoints.hpp"
+#include "Point.hpp"
 
-struct Point {
-    double x;
-    double y;
-};
+namespace geometry {
 
 class Figure {
 public:
+    VectorPoints v;
+
+    Figure() = default;
     virtual ~Figure() = default;
+    
 
-    virtual Point center() const = 0;
-    virtual double area() const = 0;
+    long double CalcArea(const VectorPoints&) const;
+    Point CalcCenter(const VectorPoints&) const;
 
-    virtual void print(std::ostream& os) const = 0;
-    virtual void read(std::istream& is) = 0;
+    virtual void ReadPoints(std::istream& is);
+    virtual void PrintPoints(std::ostream& os) const;
 
-    virtual Figure* clone() const = 0; // Для копирования через указатель
+    virtual long double Area() const = 0;
+    virtual Figure* clone() const = 0;
 
-    friend std::ostream& operator<<(std::ostream& os, const Figure& f) {
-        f.print(os);
-        return os;
-    }
-
-    friend std::istream& operator>>(std::istream& is, Figure& f) {
-        f.read(is);
-        return is;
-    }
+    friend bool operator==(const Figure&, const Figure&);
+    friend bool operator!=(const Figure&, const Figure&);
 };
+
+std::istream& operator>>(std::istream&, Figure&);
+std::ostream& operator<<(std::ostream&, const Figure&);
+
+}  // namespace geometry
