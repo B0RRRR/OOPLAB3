@@ -1,32 +1,36 @@
 #pragma once
+
 #include <iostream>
-#include "VectorPoints.hpp"
+#include <vector>
+
 #include "Point.hpp"
 
 namespace geometry {
 
 class Figure {
 public:
-    VectorPoints v;
-
     Figure() = default;
     virtual ~Figure() = default;
-    
-
-    long double CalcArea(const VectorPoints&) const;
-    Point CalcCenter(const VectorPoints&) const;
 
     virtual void ReadPoints(std::istream& is);
     virtual void PrintPoints(std::ostream& os) const;
 
     virtual long double Area() const = 0;
-    virtual Figure* clone() const = 0;
+    virtual Figure* Clone() const = 0;
 
-    friend bool operator==(const Figure&, const Figure&);
-    friend bool operator!=(const Figure&, const Figure&);
+    friend bool operator==(const Figure& a, const Figure& b);
+    friend bool operator!=(const Figure& a, const Figure& b);
+
+    Point Center() const;
+
+protected:
+    std::vector<Point> points_;
+
+    static long double CalcArea(const std::vector<Point>& vertices);
+    static Point CalcCenter(const std::vector<Point>& vertices);
 };
 
-std::istream& operator>>(std::istream&, Figure&);
-std::ostream& operator<<(std::ostream&, const Figure&);
+std::istream& operator>>(std::istream& is, Figure& f);
+std::ostream& operator<<(std::ostream& os, const Figure& f);
 
 }  // namespace geometry

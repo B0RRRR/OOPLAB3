@@ -6,20 +6,14 @@ namespace geometry {
 
 class Square : public Figure {
 public:
-    Square();
-    explicit Square(const Point& bl, long double side);
-
-    Square(const Square& other);
-    Square& operator=(const Square& other);
-    Square(Square&& other) noexcept;
-    Square& operator=(Square&& other) noexcept;
+    Square() = default;
+    Square(const Point& origin, long double side);
 
     long double Area() const override;
+    Figure* Clone() const override;
 
     void ReadPoints(std::istream& is) override;
     void PrintPoints(std::ostream& os) const override;
-
-    Figure* clone() const override;
 };
 
 }  // namespace geometry

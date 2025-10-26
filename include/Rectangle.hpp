@@ -6,20 +6,14 @@ namespace geometry {
 
 class Rectangle : public Figure {
 public:
-    Rectangle();
-    Rectangle(const Point& bl, long double width, long double height);
-
-    Rectangle(const Rectangle& other);
-    Rectangle& operator=(const Rectangle& other);
-    Rectangle(Rectangle&& other) noexcept;
-    Rectangle& operator=(Rectangle&& other) noexcept;
+    Rectangle() = default;
+    Rectangle(const Point& origin, long double width, long double height);
 
     long double Area() const override;
+    Figure* Clone() const override;
 
-    void ReadPoints(std::istream& is);
-    void PrintPoints(std::ostream& os) const;
-
-    Figure* clone() const override;
+    void ReadPoints(std::istream& is) override;
+    void PrintPoints(std::ostream& os) const override;
 };
 
 }  // namespace geometry
